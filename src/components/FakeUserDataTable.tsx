@@ -40,14 +40,14 @@ export const FakeUserDataTable = () => {
 
   const resetTable = () => {
     setPage(1);
-    setScroll(FIRST_PAGE_SIZE);
     dataTable.current?.resetScroll();
+    setScroll(FIRST_PAGE_SIZE);
   }
 
   useEffect(() => {
     const load = async () => {
       await loadUserGenerator();
-      const newUsers = generateUsers(userGenerator.current!, page, FIRST_PAGE_SIZE, errorCount, seed);
+      const newUsers = generateUsers(userGenerator.current!, 1, FIRST_PAGE_SIZE, errorCount, seed);
       setUsers(newUsers);
       resetTable();
     }
