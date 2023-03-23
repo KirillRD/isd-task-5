@@ -30,7 +30,7 @@ export const FakeUserDataTable = () => {
   const userGenerator = useRef<UserGenerator | null>(null);
 
   const [users, setUsers] = useState<User[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(2);
   const [scroll, setScroll] = useState<number>(FIRST_PAGE_SIZE);
 
   const loadUserGenerator = async (): Promise<void> => {
@@ -39,7 +39,7 @@ export const FakeUserDataTable = () => {
   }
 
   const resetTable = () => {
-    setPage(1);
+    setPage(2);
     dataTable.current?.resetScroll();
     setScroll(FIRST_PAGE_SIZE);
   }
