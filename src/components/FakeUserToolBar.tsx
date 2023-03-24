@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { Slider, SliderChangeEvent } from 'primereact/slider';
 import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
@@ -23,17 +24,22 @@ const SLIDER_STEP = 0.25;
 const MAX_SLIDER_VALUE = 10;
 
 export const FakeUserToolBar = ({ className, regions, region, onRegionChange, errorCount, onErrorCountChange, seed, onSeedChange, onExportCSV }: FakeUserToolBarProps) => {
+  const [sliderValue, setSliderValue] = useState(0);
 
   const handleRegionChange = (e: DropdownChangeEvent) => {
     onRegionChange(e.value);
   }
 
   const handleErrorCountSliderChange = (e: SliderChangeEvent) => {
-    onErrorCountChange(+e.value * 100);
+    const eventValue = +e.value;
+    setSliderValue(eventValue);
+    onErrorCountChange(eventValue);
   }
 
   const handleErrorCountInputChange = (e: InputNumberValueChangeEvent) => {
-    onErrorCountChange(e.target.value!);
+    const eventValue = e.target.value!;
+    setSliderValue(eventValue > MAX_SLIDER_VALUE ? MAX_SLIDER_VALUE : eventValue);
+    onErrorCountChange(eventValue);
   }
 
   const handleSeedInputChange = (e: InputNumberValueChangeEvent) => {
@@ -77,7 +83,7 @@ export const FakeUserToolBar = ({ className, regions, region, onRegionChange, er
             <div className='col flex align-items-center'>
               <Slider
                 className='col w-full'
-                value={errorCount * MAX_SLIDER_VALUE / MAX_ERROR_COUNT}
+                value={sliderValue}
                 onChange={handleErrorCountSliderChange}
                 min={MIN_SLIDER_VALUE}
                 step={SLIDER_STEP}
